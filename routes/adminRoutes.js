@@ -1,10 +1,10 @@
  import express from 'express';
- import {renderAdminLogin, renderAdminRegister, renderAdminWelcome, renderAdminDashboard, registerAdmin, logoutAdmin, loginAdmin} from '../controllers/adminController.js';
+ import {renderAdminLogin, renderAdminRegister,  renderAdminDashboard, registerAdmin, logoutAdmin, loginAdmin} from '../controllers/adminController.js';
 import { isAdmin } from '../middlewares/auth.js';
 import { deleteNotification, renderSendNotification,  sendNotification } from '../controllers/sendNotification.js';
  const router = express.Router(); 
 
-  router.get('/home', renderAdminWelcome); 
+ 
   router.get('/register', renderAdminRegister) 
   router.post('/register', registerAdmin);
 

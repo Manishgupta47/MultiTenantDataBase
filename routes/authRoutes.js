@@ -1,7 +1,8 @@
 import express from 'express';
 import {  verifyOtpAndResetPassword, renderUserForgotPasswordPage, renderForgotPasswordPage,  forgotPassword, renderResetByOtpPage, renderUserResetByOtpPage,  userSendOtp, verifyUserOtpAndResetPassword } from "../controllers/authController.js";
-
+import { renderAdminWelcome } from '../controllers/adminController.js';
 const router = express.Router();
+router.get('/', renderAdminWelcome); 
 router.get('/admin-forgot-password', renderForgotPasswordPage);
 router.post('/admin-forgot-password', forgotPassword); 
 router.get('/admin-verify-otp', renderResetByOtpPage); 
