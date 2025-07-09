@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Send Notification</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to bottom right, #0f2027, #203a43, #2c5364);
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      padding-top: 40px;
+    }
+
+    .container {
+      background-color: #ffffff;
+      padding: 40px;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+      max-width: 620px;
+      width: 90%;
+    }
+
+    h2 {
+      text-align: center;
+      color: #007bff;
+      margin-bottom: 30px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: bold;
+      font-size: 15px;
+      color: #333;
+    }
+
+    input[type="text"], textarea {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 15px;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background: linear-gradient(to right, #007bff, #00c6ff);
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background: linear-gradient(to right, #0056b3, #00aaff);
+    }
+
+    .back-link {
+      display: block;
+      margin-top: 25px;
+      text-align: center;
+      font-weight: bold;
+      text-decoration: none;
+      color: #007bff;
+    }
+
+    .notification-list {
+      margin-top: 40px;
+    }
+
+    .notification-item {
+      background-color: #f7f7f7;
+      border-radius: 12px;
+      padding: 18px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    }
+
+    .notification-item h4 {
+      margin-bottom: 6px;
+      color: #007bff;
+    }
+
+    .notification-item p {
+      margin-bottom: 8px;
+      color: #333;
+    }
+
+    .notification-item small {
+      color: #777;
+      font-size: 13px;
+    }
+
+    .notification-item form {
+      margin-top: 10px;
+    }
+
+    .delete-btn {
+      background-color: #dc3545;
+      color: white;
+      padding: 8px 14px;
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .delete-btn:hover {
+      background-color: #b02a37;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>Send Notification</h2>
+
+    <form action="/admin/send-notification" method="POST">
+      <label for="title">Title</label>
+      <input type="text" id="title" name="title" placeholder="Enter notification title" required />
+
+      <label for="message">Message</label>
+      <textarea id="message" name="message" rows="4" placeholder="Write your message here..." required></textarea>
+
+      <label for="userEmail">Send to User Email (optional)</label>
+      <input type="text" id="userEmail" name="userEmail" placeholder="Leave empty to send to all users" />
+     
+
+      <button type="submit">Send Notification</button>
+    </form>
+    <a class="back-link" href="/admin/dashboard">← Back to Dashboard</a>
+
+    <% if (notifications && notifications.length > 0) { %>
+      <div class="notification-list">
+        <h3 style="margin-top: 30px;">Sent Notifications</h3>
+
+        <% notifications.forEach(n => { %>
+          <div class="notification-item">
+            <h4><%= n.title %></h4>
+            <p><%= n.message %></p>
+            <% if (n.email) { %><p><strong>To:</strong> <%= n.email %></p><% } %>
+            <small><%= new Date(n.createdAt).toLocaleString() %></small>
+
+            <form action="/admin/notifications/<%= n._id %>/delete" method="POST">
+              <button class="delete-btn" type="submit">Delete</button>
+            </form>
+          </div>
+        <% }); %>
+      </div>
+    <% } else { %>
+      <p style="margin-top: 30px; color: #555;">No notifications sent yet.</p>
+    <% } %>
+
+    
+  </div>
+
+</body>
+</html>
+
+

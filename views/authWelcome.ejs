@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Welcome to Admin Portal</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to bottom right, #0f2027, #203a43, #2c5364);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 40px;
+    }
+
+    .form-container {
+      background-color: #ffffff;
+      color: #333;
+      padding: 60px 80px;
+      border-radius: 20px;
+      max-width: 600px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    }
+
+    h1 {
+      font-size: 34px;
+      color: #007bff;
+      margin-bottom: 15px;
+    }
+
+    p {
+      font-size: 17px;
+      margin-bottom: 30px;
+      color: #444;
+    }
+
+    .btn-group {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .nav-link {
+      display: inline-block;
+      background: linear-gradient(to right, #007bff, #00c6ff);
+      color: white;
+      padding: 14px;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: bold;
+      font-size: 16px;
+      transition: background-color 0.3s ease;
+    }
+
+    .nav-link:hover {
+      background: linear-gradient(to right, #0056b3, #00aaff);
+    }
+
+    .note {
+      margin-top: 25px;
+      font-size: 14px;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <h1>Welcome to Admin Portal</h1>
+    <p>Please choose an option to continue</p>
+
+    <div class="btn-group">
+      <a href="/admin/login" class="nav-link">Admin Login</a>
+      <a href="/admin/register" class="nav-link">Admin Register</a>
+    </div>
+
+    <p class="note">Access is for authorized administrators only</p>
+  </div>
+</body>
+</html>
+

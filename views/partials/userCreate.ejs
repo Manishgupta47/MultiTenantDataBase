@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Create User</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="/css/toaster.css" />
+
+</head>
+<body>
+  <div class="form-container">
+    <h1>Create User</h1>
+    <% if (typeof error !== 'undefined' && error) { %>
+      <p style="color: red;"><%= error %></p>
+    <% } %>
+   
+    <form action="/user/create" method="POST" class="form-box">
+      <input type="text" name="name" placeholder="Full Name" required />
+      <input type="email" name="email" placeholder="Email Address" required />
+
+      <div class="password-wrapper">
+        <input type="password" id="password" name="password" placeholder="Password" required />
+        <i id="toggleIcon" class="fas fa-eye toggle-icon" onclick="togglePassword()"></i>
+      </div>
+
+      <input type="text" name="mobileNo" placeholder="Mobile Number" required />
+
+      <input type="hidden" name="Id" value="<%= adminId %>" />
+
+      <button type="submit" class="btn-submit">Create Account</button>
+    </form>
+    <a href="/admin/login" class="btn-link">Back to Admin Login</a>
+  </div>
+
+  <script>
+    function togglePassword() {
+      const pwd = document.getElementById("password");
+      const toggle = document.getElementById("toggleIcon");
+
+      if (pwd.type === "password") {
+        pwd.type = "text";
+        toggle.classList.remove("fa-eye");
+        toggle.classList.add("fa-eye-slash");
+      } else {
+        pwd.type = "password";
+        toggle.classList.remove("fa-eye-slash");
+        toggle.classList.add("fa-eye");
+      }
+    }
+  </script>
+</body>
+</html>
+
+
+
+
+
+

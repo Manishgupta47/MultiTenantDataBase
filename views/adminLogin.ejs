@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Admin Login</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/toaster.css" />
+
+  <!-- Font Awesome for password eye icon -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body>
+  <div class="form-container">
+    <h1>Admin Login</h1>
+    <% if (typeof error !== 'undefined' && error) { %>
+      <p style="color: red;"><%= error %></p>
+    <% } %>
+
+    <% if (typeof success !== 'undefined' && success) { %>
+      <div class="toast success"><%= success %></div>
+    <% } %>
+    
+    <form action="/admin/login" method="POST" class="form-box">
+      <input type="email" name="email" placeholder="Email" required />
+
+      <div class="password-wrapper">
+        <input type="password" id="password" name="password" placeholder="Password" required />
+        <i id="toggleIcon" class="fas fa-eye toggle-icon" onclick="togglePassword()"></i>
+      </div>
+
+      <button type="submit" class="btn-submit">Login</button>
+    </form>
+
+    <p>Don't have an account?</p>
+    <a href="/admin/register" class="btn-link">Go to Admin Registration</a><br/>
+    <a href="/admin-forgot-password" class="btn-link">Forgot Password?</a>
+  </div>
+
+  <script>
+    function togglePassword() {
+      const pwd = document.getElementById("password");
+      const toggle = document.getElementById("toggleIcon");
+
+      if (pwd.type === "password") {
+        pwd.type = "text";
+        toggle.classList.remove("fa-eye");
+        toggle.classList.add("fa-eye-slash");
+      } else {
+        pwd.type = "password";
+        toggle.classList.remove("fa-eye-slash");
+        toggle.classList.add("fa-eye");
+      }
+    }
+  </script>
+</body>
+</html>
+
+
+

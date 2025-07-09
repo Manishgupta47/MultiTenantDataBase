@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Email Generator | Gemini AI</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/toaster.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <style>
+    body {
+      background: linear-gradient(135deg, #1c1c1c, #0f2027, #203a43);
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 30px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+    }
+    .container {
+      background: linear-gradient(145deg, #ffffff, #f0f0f0);
+      padding: 40px;
+      max-width: 800px;
+      width: 150%;
+      border-radius: 16px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+      margin-right: 10px;
+    }
+    h2 {
+      margin-bottom: 25px;
+      color: #333;
+    }
+    label {
+      font-weight: bold;
+      display: block;
+      margin-bottom: 6px;
+      color: #333;
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+      background: white;
+    }
+    textarea {
+      resize: vertical;
+      height: 120px;
+    }
+    button {
+      padding: 12px 25px;
+      background: linear-gradient(to right, #007bff, #00c6ff);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: linear-gradient(to right, #0056b3, #00aaff);
+    }
+    .output {
+      margin-top: 30px;
+      padding: 20px;
+      background: #e2f0ff;
+      border-radius: 12px;
+      box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
+    }
+    .output h3 {
+      margin-bottom: 10px;
+      color: #222;
+    }
+    pre {
+      white-space: pre-wrap;
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 14px;
+      background: #f5f5f5;
+      padding: 10px;
+      border-radius: 8px;
+    }
+    .sidebar {
+      width: 350px;
+      background: linear-gradient(145deg, #ffffff, #f0f0f0);
+      color: #333;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 80vh;
+      border-right: 1px solid #ccc;
+      margin-right: 80px;
+      border-radius: 16px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    }
+    .action-buttons {
+  display: flex;
+  justify-content: space-between; /* or center */
+  gap: 10px;
+}
+
+.logout-btn,
+.notification {
+  flex: 1;
+  text-align: center;
+  padding: 10px 20px;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.logout-btn {
+  background: linear-gradient(to right, #880d19, #dc3500);
+}
+
+.notification {
+  background: linear-gradient(to right, rgb(7, 95, 7), rgb(45, 189, 45));
+}
+
+
+.btn-group {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+
+    #smtpForm {
+      display: none;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    
+  <h1 style="font-size: 28px; padding-left: 30px;">Welcome, <%= user?.name %> </h1>
+  <div style="display: flex; align-items: center; margin-top: -40px; ">
+    <img 
+      src="https://robohash.org/<%= user.email %>?set=set3" 
+      alt="User Avatar"
+      style="width: 60px; height: 60px; border-radius: 50%; margin-right: 10px;"
+    >
+    <span><%= user?.email %></span>
+  </div>
+  
+  <div class="action-buttons">
+    <a href="/user/notifications" class="notification"> Notification</a>
+    <a href="/user/logout" class="logout-btn">Logout</a>
+  </div>
+  
+    <div class="video-section" >
+      <h2>📺 How to Generate SMTP App Password</h2>
+      <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+        <iframe src="https://www.youtube.com/embed/74QQfPrk4vE?si=7N5g4xuVvO2tl7Ho"
+          frameborder="0" allowfullscreen
+          style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
+        </iframe>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="container">
+    <h2>📨 Generate Email with Gemini AI</h2>
+
+    <% if (typeof success !== 'undefined' && success) { %>
+      <p style="color: green;"><%= success %></p>
+    <% } %>
+  
+  
+    <% if (typeof error !== 'undefined' && error) { %>
+      <p style="color: red;"><%= error %></p>
+    <% } %>
+
+    <!-- SMTP Configuration Toggle -->
+    <button onclick="document.getElementById('smtpForm').style.display = (document.getElementById('smtpForm').style.display === 'none' ? 'block' : 'none')">⚙️ Configure SMTP</button>
+
+    <!-- SMTP Form -->
+    <form id="smtpForm" method="POST" action="/email/save-smtp">
+      <label>SMTP Host</label>
+      <input type="text" name="smtpHost" value="smtp.gmail.com" readonly>
+      <label>SMTP Port</label>
+      <input type="text" name="smtpPort" value="465" readonly>
+      <label>Your Gmail Address</label>
+      <input type="email" name="email" required>
+      <label>App Password</label>
+      <input type="password" name="appPassword" required>
+      <button type="submit">💾 Save SMTP Settings</button>
+    </form>
+
+    <form id="streamForm"  method="GET" action="/email/stream">
+      <label for="tone">Tone</label>
+      <select id="tone" name="tone">
+        <option value="Formal">Formal</option>
+        <option value="Friendly">Friendly</option>
+        <option value="Professional">Professional</option>
+      </select>
+    
+      <label for="goal">Purpose</label>
+      <textarea id="goal" name="goal" placeholder="Enter email purpose..." required></textarea>
+    
+      <button type="submit"> Generate Email</button>
+    </form>
+    <div id="outputBox" style="display:none; margin-top:20px;">
+      <p id="statusMsg" style="font-weight:bold;"></p>
+    
+      <label for="subjectBox">Subject</label>
+      <input type="text" id="subjectBox" name="subject" placeholder="Enter your subject manually" style="width:100%; margin-bottom:10px;" required>
+      
+
+    
+      <label for="bodyBox">Generated Email</label>
+      <textarea id="bodyBox" rows="12" style="width: 100%; background: #f4f4f4; padding: 12px; font-family: monospace; white-space: pre-wrap; border-radius: 8px;"></textarea>
+
+    
+      <form method="POST" action="/email/send" id="sendForm">
+        <input type="email" name="email" placeholder="Receiver Email" required>
+        <input type="hidden" name="subject" id="hiddenSubject">
+        <input type="hidden" name="body" id="hiddenBody">
+        <button type="submit">📧 Send Email</button>
+      </form>
+    </div>
+    <script>
+      const streamForm = document.getElementById("streamForm");
+      const goalInput = document.getElementById("goal");
+      const toneInput = document.getElementById("tone");
+      const subjectBox = document.getElementById("subjectBox");
+      const bodyBox = document.getElementById("bodyBox");
+      const hiddenSubject = document.getElementById("hiddenSubject");
+      const hiddenBody = document.getElementById("hiddenBody");
+      const outputBox = document.getElementById("outputBox");
+      const statusMsg = document.getElementById("statusMsg");
+    
+      streamForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+    
+        const goal = goalInput.value.trim();
+        const tone = toneInput.value;
+    
+        if (!goal) return alert("Please enter a purpose.");
+    
+        statusMsg.textContent = "Generating email...";
+        outputBox.style.display = "block";
+        bodyBox.value = "";
+        hiddenBody.value = "";
+    
+        const url = `/email/stream?goal=${encodeURIComponent(goal)}&tone=${encodeURIComponent(tone)}`;
+        const eventSource = new EventSource(url);
+    
+      
+        subjectBox.addEventListener("input", () => {
+          hiddenSubject.value = subjectBox.value;
+        });
+    
+        eventSource.onmessage = (event) => {
+          const chunk = event.data;
+          if (!chunk) return;
+    
+          bodyBox.value += chunk + "\n";
+          hiddenBody.value += chunk + "\n";
+        };
+    
+        eventSource.onerror = (err) => {
+          statusMsg.textContent = " Email generation failed.";
+          eventSource.close();
+        };
+    
+        eventSource.addEventListener("done", () => {
+          statusMsg.textContent = " Email generated!";
+          eventSource.close();
+        });
+      });
+    </script>
+    
+    
+    
+    
+</body>
+</html>
+
+
+
+
+
+
+
+

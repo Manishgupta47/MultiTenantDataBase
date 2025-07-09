@@ -1,0 +1,27 @@
+/* public/css/toaster.css */
+.toast {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+    padding: 12px 20px;
+    border-radius: 6px;
+    color: #fff;
+    font-weight: bold;
+    animation: fadeInOut 4s ease-in-out;
+  }
+  
+  .toast.success {
+    background-color: #69eb87;
+  }
+  .toast.error {
+    background-color: #f05968;
+  }
+  
+  @keyframes fadeInOut {
+    0% { opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { opacity: 0; }
+  }
+  
