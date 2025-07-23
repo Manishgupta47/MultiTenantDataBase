@@ -1,19 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta charset="UTF-8" />
   <title>Create User</title>
   <link rel="stylesheet" href="/css/style.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <link rel="stylesheet" href="/css/toaster.css" />
-
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 </head>
 <body>
+
   <div class="form-container">
     <h1>Create User</h1>
+
     <% if (typeof error !== 'undefined' && error) { %>
-      <p style="color: red;"><%= error %></p>
+      <div class="error-msg"><%= error %></div>
     <% } %>
-   
+
+    <% if (typeof success !== 'undefined' && success) { %>
+      <div class="toast success"><%= success %></div>
+    <% } %>
+
     <form action="/user/create" method="POST" class="form-box">
       <input type="text" name="name" placeholder="Full Name" required />
       <input type="email" name="email" placeholder="Email Address" required />
@@ -27,9 +33,13 @@
 
       <input type="hidden" name="Id" value="<%= adminId %>" />
 
-      <button type="submit" class="btn-submit">Create Account</button>
+      <button type="submit" class="sub-btn">Create Account</button>
     </form>
-    <a href="/admin/login" class="btn-link">Back to Admin Login</a>
+
+    <div class="btn-group">
+      <a href="/admin/login" class="nav-btn">Back to Admin Login</a>
+      <a href="/user/login" class="nav-btn">Go to User Login</a>
+    </div>
   </div>
 
   <script>
@@ -48,11 +58,6 @@
       }
     }
   </script>
+
 </body>
 </html>
-
-
-
-
-
-

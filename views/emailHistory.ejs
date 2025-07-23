@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/css/style.css"> <!-- Link to the style.css file -->
+  <style>
+    .container {
+      display: flex;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .form-container {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+      padding: 40px;
+      width: 60%;
+      max-width: 800px; /* Adjust the width */
+    }
+
+    h1 {
+      color: #007bff;
+      font-size: 32px;
+      font-weight: 600;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .email-history-container {
+      background: #f9f9f9;
+      padding: 20px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .email-history-item {
+      margin-bottom: 20px;
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      background: #fff;
+    }
+
+    .email-history-item .email-body-container {
+      background: #fff;
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      max-height: 100px;
+      overflow-y: auto;
+      font-family: Arial, sans-serif;
+      color: #333;
+      white-space: pre-wrap; /* Preserve formatting */
+      margin-top: 15px;
+    }
+
+    .back-btn {
+      background: linear-gradient(to right, #007bff, #00c6ff);
+      color: white;
+      border: none;
+      padding: 12px ;
+      font-size: 16px;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+      text-align: center;
+      transition: background 0.3s ease, transform 0.2s ease;
+      display: block;
+      margin: 20px auto;
+    }
+
+    .back-btn:hover {
+      background: linear-gradient(to right, #0056b3, #00aaff);
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="form-container">
+      <h1><%= title %></h1>
+
+      <!-- Container for Email History Item -->
+      <div class="email-history-container">
+        <% emails.forEach(email => { %>
+          <div class="email-history-item">
+            <h3>To: <%= email.to %></h3>
+            <p><strong>Subject:</strong> <%= email.subject %></p>
+            <p><strong>Sent At:</strong> <%= new Date(email.sentAt).toLocaleString() %></p>
+            
+            <!-- Email Body Container -->
+            <div class="email-body-container">
+              <p><%= email.body %></p>
+            </div>
+          </div>
+        <% }) %>
+      </div>
+
+      <a href="/email/generate-email" class="back-btn"> Back to Dashboard</a>
+    </div>
+  </div>
+</body>
+</html>

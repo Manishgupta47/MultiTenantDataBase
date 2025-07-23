@@ -1,43 +1,158 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>All Registered Users</title>
+  <meta charset="UTF-8" />
+  <title>Admin Dashboard</title>
   <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/toaster.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
   <style>
     body {
       margin: 0;
-      padding: 0;
       font-family: 'Segoe UI', sans-serif;
       background: linear-gradient(to bottom right, #0f2027, #203a43, #2c5364);
-      display: flex;
-      justify-content: center;
-      align-items: center;
       min-height: 100vh;
+      padding-top: 70px;
+      display: flex;
     }
 
-    .container {
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
       background-color: #ffffff;
-      padding: 50px 60px;
-      border-radius: 18px;
-      max-width: 950px;
-      width: 90%;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
-      text-align: center;
+      padding: 16px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #ccc;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+      z-index: 999;
     }
 
-    h2 {
-      font-size: 28px;
-      font-weight: 700;
+    .navbar-left {
+      font-weight: bold;
       color: #007bff;
-      margin-bottom: 30px;
+      font-size: 18px;
+    }
+
+    .navbar-center a {
+      margin: 0 12px;
+      text-decoration: none;
+      color: #333;
+      font-weight: 500;
+      cursor: pointer;
+    }
+
+    .navbar-center a:hover {
+      color: #007bff;
+    }
+
+    .navbar-right i {
+      font-size: 18px;
+      margin-left: 20px;
+      cursor: pointer;
+      color: #007bff;
+    }
+
+    .sidebar {
+      width: 260px;
+      background-color: #fff;
+      padding: 30px 20px;
+      border-right: 1px solid #ddd;
+      box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
+      position: fixed;
+      top: 70px;
+      bottom: 0;
+      left: 0;
+      overflow-y: auto;
+    }
+
+    .sidebar .avatar-image {
+      text-align: center;
+      margin-bottom: 15px;
+    }
+
+    .sidebar .avatar-image img {
+      border-radius: 50%;
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+    }
+
+    .sidebar .admin-name {
+      text-align: center;
+      font-size: 18px;
+      font-weight: 600;
+      color: #007bff;
+      margin-bottom: 20px;
+    }
+
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .sidebar ul li {
+      margin: 12px 0;
+      font-size: 15px;
+    }
+
+    .sidebar ul li i {
+      margin-right: 8px;
+      color: #007bff;
+    }
+
+    .sidebar ul li strong {
+      color: #007bff;
+    }
+
+    .main-content {
+      margin-left: 260px;
+      padding: 40px;
+      flex-grow: 1;
+      width: calc(100% - 260px);
+    }
+
+    .section-content {
+      display: none;
+    }
+
+    .section-content.active {
+      display: block;
+    }
+
+    .sub-btn {
+      background: linear-gradient(to right, #007bff, #00c6ff);
+      color: white;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-weight: bold;
+      text-decoration: none;
+      display: inline-block;
+      margin-top: 10px;
+    }
+
+    .sub-btn:hover {
+      background: linear-gradient(to right, #0056b3, #00aaff);
+    }
+
+    h1, h2 {
+      color: #007bff;
     }
 
     table {
       width: 100%;
       border-collapse: collapse;
-      margin: 20px 0;
-      border-radius: 8px;
-      overflow: hidden;
+      margin-top: 20px;
+    }
+
+    th, td {
+      padding: 12px 16px;
+      border: 1px solid #ccc;
+      text-align: center;
     }
 
     thead {
@@ -45,90 +160,138 @@
       color: white;
     }
 
-    th, td {
-      padding: 12px 16px;
-      text-align: center;
-      font-size: 15px;
-      color: #333;
-      border-bottom: 1px solid #ddd;
-    }
-
-    tbody tr:hover {
-      background-color: #f2f2f2;
-    }
-
     .no-users {
       text-align: center;
-      padding: 12px;
       color: #666;
-    }
-
-    .btn-group {
-      margin-top: 30px;
-    }
-
-    .nav-link {
-      display: inline-block;
-      background-color: #007bff;
-      color: white;
-      padding: 12px 28px;
-      text-decoration: none;
-      border-radius: 8px;
-      font-weight: bold;
-      transition: background-color 0.3s ease;
-    }
-
-    .nav-link:hover {
-      background-color: #0056b3;
     }
   </style>
 </head>
 <body>
-  <div class="container">
+
+  <!-- Top Navbar -->
+  <div class="navbar">
+    <div class="navbar-left">
+      Welcome, <%= adminData?.name %>
+    </div>
+    <div class="navbar-center">
+      <a onclick="showSection('userLogin')"><i class="fas fa-sign-in-alt"></i> User Login</a>
+      <a onclick="showSection('createUser')"><i class="fas fa-user-plus"></i> Create User</a>
+      <a onclick="showSection('allUsers')"><i class="fas fa-users"></i> All Users</a>
+    </div>
+    <div class="navbar-right">
+      <a href="/admin/send-notification" title="Send Notification">
+        <i class="fas fa-bell"></i>
+      </a>
+      <a href="/admin/logout" title="Logout">
+        <i class="fas fa-sign-out-alt"></i>
+      </a>
+    </div>
+  </div>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="avatar-image">
+      <img src="https://i.pravatar.cc/100?u=<%= adminData?.email %>" alt="Admin Avatar" />
+    </div>
+    <h2 class="admin-name"><%= adminData?.name %></h2>
+    <ul>
+      <li><i class="fas fa-id-badge"></i> <strong>ID:</strong> <%= adminData?.Id %></li>
+      <li><i class="fas fa-envelope"></i> <strong>Email:</strong> <%= adminData?.email %></li>
+      <li><i class="fas fa-phone"></i> <strong>Mobile:</strong> <%= adminData?.mobileNo %></li>
+    </ul>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
 
     <% if (success) { %>
-      <script>alert("<%= success %>");</script>
+      <div class="toast success"><%= success %></div>
     <% } %>
 
-    <h2>All Registered Users</h2>
+    <!-- User Login (Default) -->
+    <div id="userLogin" class="section-content active">
+      <h2>User Login</h2>
+      <form action="/user/login" method="POST" class="form-box">
+        <input type="email" name="email" placeholder="Email" required />
+        <div class="password-wrapper">
+          <input type="password" id="password" name="password" placeholder="Password" required />
+          <i id="toggleIcon" class="fas fa-eye toggle-icon" onclick="togglePassword()"></i>
+        </div>
+        <input type="text" name="Id" value="<%= adminData?.Id %>" readonly />
+        <button type="submit" class="sub-btn">Login</button>
+      </form>
+    </div>
 
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Email</th>
-          <th>Mobile No</th>
-          <th>Role</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% if (users.length > 0) { %>
-          <% users.forEach(user => { %>
-            <tr>
-              <td><%= user.name %></td>
-              <td><%= user.email %></td>
-              <td><%= user.mobileNo %></td>
-              <td><%= user.role %></td>
-            </tr>
-          <% }) %>
-        <% } else { %>
+    <!-- Create User -->
+    <div id="createUser" class="section-content">
+      <h2>Create User</h2>
+      <form action="/user/create" method="POST" class="form-box">
+        <input type="text" name="name" placeholder="Full Name" required />
+        <input type="email" name="email" placeholder="Email Address" required />
+        <div class="password-wrapper">
+          <input type="password" id="password2" name="password" placeholder="Password" required />
+          <i class="fas fa-eye toggle-icon" onclick="togglePassword2()"></i>
+        </div>
+        <input type="text" name="mobileNo" placeholder="Mobile Number" required />
+        <input type="hidden" name="Id" value="<%= adminData?.Id %>" />
+        <button type="submit" class="sub-btn">Create Account</button>
+      </form>
+    </div>
+
+    <!-- All Users -->
+    <div id="allUsers" class="section-content">
+      <h2>All Registered Users</h2>
+      <table>
+        <thead>
           <tr>
-            <td colspan="4" class="no-users">No users found</td>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Mobile No</th>
+            <th>Role</th>
           </tr>
-        <% } %>
-      </tbody>
-    </table>
-
-    <div class="btn-group">
-      <a href="/admin/dashboard" class="nav-link">Back to Dashboard</a>
+        </thead>
+        <tbody>
+          <% if (users.length > 0) { %>
+            <% users.forEach(user => { %>
+              <tr>
+                <td><%= user.name %></td>
+                <td><%= user.email %></td>
+                <td><%= user.mobileNo %></td>
+                <td><%= user.role %></td>
+              </tr>
+            <% }) %>
+          <% } else { %>
+            <tr>
+              <td colspan="4" class="no-users">No users found</td>
+            </tr>
+          <% } %>
+        </tbody>
+      </table>
     </div>
 
   </div>
+
+  <!-- Scripts -->
+  <script>
+    function showSection(id) {
+      const sections = document.querySelectorAll('.section-content');
+      sections.forEach(section => section.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+    }
+
+    function togglePassword() {
+      const pwd = document.getElementById("password");
+      const toggle = document.getElementById("toggleIcon");
+      pwd.type = pwd.type === "password" ? "text" : "password";
+      toggle.classList.toggle("fa-eye");
+      toggle.classList.toggle("fa-eye-slash");
+    }
+
+    function togglePassword2() {
+      const pwd = document.getElementById("password2");
+      pwd.type = pwd.type === "password" ? "text" : "password";
+    }
+  </script>
+
 </body>
 </html>
-
-
-
-
-
-

@@ -1,18 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta charset="UTF-8" />
   <title>Admin Login</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <link rel="stylesheet" href="/css/style.css" />
   <link rel="stylesheet" href="/css/toaster.css" />
-
-  <!-- Font Awesome for password eye icon -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 </head>
 <body>
   <div class="form-container">
     <h1>Admin Login</h1>
+
     <% if (typeof error !== 'undefined' && error) { %>
-      <p style="color: red;"><%= error %></p>
+      <p class="error-msg"><%= error %></p>
     <% } %>
 
     <% if (typeof success !== 'undefined' && success) { %>
@@ -21,18 +22,17 @@
     
     <form action="/admin/login" method="POST" class="form-box">
       <input type="email" name="email" placeholder="Email" required />
-
-      <div class="password-wrapper">
+      <div class="input-group password-wrapper">
         <input type="password" id="password" name="password" placeholder="Password" required />
         <i id="toggleIcon" class="fas fa-eye toggle-icon" onclick="togglePassword()"></i>
       </div>
 
-      <button type="submit" class="btn-submit">Login</button>
+      <button type="submit" class="sub-btn">Login</button>
     </form>
 
-    <p>Don't have an account?</p>
-    <a href="/admin/register" class="btn-link">Go to Admin Registration</a><br/>
-    <a href="/admin-forgot-password" class="btn-link">Forgot Password?</a>
+    <p class="small-text">Don't have an account?</p>
+    <a href="/admin/register" class="nav-btn">Go to Admin Registration</a><br/>
+    <a href="/admin-forgot-password" class="nav-btn">Forgot Password?</a>
   </div>
 
   <script>
@@ -42,17 +42,16 @@
 
       if (pwd.type === "password") {
         pwd.type = "text";
-        toggle.classList.remove("fa-eye");
-        toggle.classList.add("fa-eye-slash");
+        toggle.classList.replace("fa-eye", "fa-eye-slash");
       } else {
         pwd.type = "password";
-        toggle.classList.remove("fa-eye-slash");
-        toggle.classList.add("fa-eye");
+        toggle.classList.replace("fa-eye-slash", "fa-eye");
       }
     }
   </script>
 </body>
 </html>
+
 
 
 

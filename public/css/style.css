@@ -1,101 +1,115 @@
-/* Reset & Base */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
+/* ===== Base Layout ===== */
 body {
   font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(135deg, #1c1c1c, #0f2027, #203a43); /* Dark stylish gradient */
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
+  min-height: 85vh;
+  padding: 40px;
+  margin: 0;
 }
 
-/* Form Container */
+/* ===== Form Container ===== */
 .form-container {
-  background: linear-gradient(145deg, #ffffff, #f0f0f0); /* Light card contrast */
-  padding: 40px;
-  max-width: 420px;
-  width: 90%;
+  background: linear-gradient(145deg, #ffffff, #f0f0f0);
+  padding: 50px 40px;
+  max-width: 360px;
+  width: 100%;
   border-radius: 16px;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
   text-align: center;
 }
 
-/* Heading */
+/* ===== Headings and Paragraphs ===== */
 .form-container h1 {
-  margin-bottom: 25px;
-  color: #333;
-  font-size: 28px;
+  font-size: 32px;
+  color: #007bff;
+  margin-bottom: 20px;
   font-weight: 600;
 }
 
-/* Input Fields */
-.form-box input[type="text"],
-.form-box input[type="email"],
-.form-box input[type="password"] {
-  width: 100%;
-  padding: 12px;
-  margin: 12px 0;
-  border-radius: 8px;
-  border: 1px solid #ccc;
+.form-container p {
   font-size: 16px;
-  transition: border-color 0.3s;
+  margin-bottom: 20px;
+  color: #444;
 }
 
-.form-box input:focus {
+/* ===== Input Fields ===== */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"] {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 18px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 15px;
   outline: none;
+  box-sizing: border-box;
+}
+
+input:focus {
   border-color: #007bff;
   box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
 }
 
-/* Button Submit */
-.btn-submit {
-  width: 100%;
-  padding: 12px;
+/* ===== Submit / Action Buttons (.sub-btn) ===== */
+.sub-btn {
   background: linear-gradient(to right, #007bff, #00c6ff);
   color: white;
-  font-weight: bold;
   border: none;
-  border-radius: 8px;
-  margin-top: 15px;
-  cursor: pointer;
+  padding: 12px 20px;
   font-size: 16px;
-  transition: background 0.3s ease;
-}
-
-.btn-submit:hover {
-  background: linear-gradient(to right, #0056b3, #00aaff);
-}
-
-/* Link */
-.btn-link {
-  display: inline-block;
-  margin-top: 15px;
-  color: #007bff;
-  text-decoration: none;
   font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  display: block;
+  width: 100%;
+  margin: 8px 0;
+  text-align: center;
+  text-decoration: none;
+  transition: background 0.3s ease, transform 0.2s ease;
 }
 
-.btn-link:hover {
+.sub-btn:hover {
   background: linear-gradient(to right, #0056b3, #00aaff);
+  transform: translateY(-2px);
 }
 
-/* Password Visibility */
+/* ===== Text-style Links (.nav-btn) ===== */
+.nav-btn {
+  background: none;
+  color: #007bff;
+  padding: 0;
+  border: none;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: underline;
+  display: inline-block;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.nav-btn:hover {
+  color: #0056b3;
+  text-decoration: none;
+}
+
+/* ===== Password Toggle ===== */
 .password-wrapper {
   position: relative;
 }
 
 .password-wrapper input {
-  width: 100%;
   padding-right: 40px;
+
 }
 
 .toggle-icon {
   position: absolute;
+  padding-bottom: 17px;
   top: 50%;
   right: 12px;
   transform: translateY(-50%);
@@ -104,19 +118,81 @@ body {
   color: #555;
 }
 
-/* Success/Error Messages */
-.success-msg {
-  color: green;
-  margin-bottom: 15px;
+/* ===== Notes and Errors ===== */
+.note {
+  margin-top: 20px;
+  font-size: 14px;
+  color: #555;
+  opacity: 0.85;
+  font-style: italic;
 }
 
 .error-msg {
   color: red;
-  margin-bottom: 15px;
+  font-weight: 500;
+  margin-bottom: 20px;
 }
 
+/* ===== Grouped Buttons ===== */
+.btn-group {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 24px;
+  margin-bottom: 16px;
+}
 
+/* ===== Optional Small Text ===== */
+.small-text {
+  font-size: 14px;
+  color: #666;
+  margin-top: 10px;
+}
 
+.sidebar {
+  width: 250px;
+  padding: 30px 20px;
+  background: #f7f9fb;
+  border-right: 1px solid #ddd;
+  position: fixed;
+  top: 70px;
+  bottom: 0;
+  left: 0;
+  overflow-y: auto;
+  text-align: center;
+  margin-top: -15px;
+}
 
+.avatar-image img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: -15px;
+  border: 2px solid #007bff;
+}
 
+.admin-name {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: #007bff;
+}
 
+.admin-info {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  text-align: left;
+}
+
+.admin-info li {
+  font-size: 14px;
+  margin: 10px 0;
+  color: #333;
+}
+
+.admin-info li i {
+  margin-right: 6px;
+  color: #007bff;
+}

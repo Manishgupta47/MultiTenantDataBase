@@ -1,168 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Send Notification</title>
-  <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(to bottom right, #0f2027, #203a43, #2c5364);
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      min-height: 100vh;
-      padding-top: 40px;
-    }
-
-    .container {
-      background-color: #ffffff;
-      padding: 40px;
-      border-radius: 16px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
-      max-width: 620px;
-      width: 90%;
-    }
-
-    h2 {
-      text-align: center;
-      color: #007bff;
-      margin-bottom: 30px;
-    }
-
-    label {
-      display: block;
-      margin-bottom: 6px;
-      font-weight: bold;
-      font-size: 15px;
-      color: #333;
-    }
-
-    input[type="text"], textarea {
-      width: 100%;
-      padding: 12px;
-      margin-bottom: 20px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-      font-size: 15px;
-    }
-
-    button {
-      width: 100%;
-      padding: 12px;
-      background: linear-gradient(to right, #007bff, #00c6ff);
-      color: white;
-      font-size: 16px;
-      font-weight: bold;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: background 0.3s ease;
-    }
-
-    button:hover {
-      background: linear-gradient(to right, #0056b3, #00aaff);
-    }
-
-    .back-link {
-      display: block;
-      margin-top: 25px;
-      text-align: center;
-      font-weight: bold;
-      text-decoration: none;
-      color: #007bff;
-    }
-
-    .notification-list {
-      margin-top: 40px;
-    }
-
-    .notification-item {
-      background-color: #f7f7f7;
-      border-radius: 12px;
-      padding: 18px;
-      margin-bottom: 20px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-    }
-
-    .notification-item h4 {
-      margin-bottom: 6px;
-      color: #007bff;
-    }
-
-    .notification-item p {
-      margin-bottom: 8px;
-      color: #333;
-    }
-
-    .notification-item small {
-      color: #777;
-      font-size: 13px;
-    }
-
-    .notification-item form {
-      margin-top: 10px;
-    }
-
-    .delete-btn {
-      background-color: #dc3545;
-      color: white;
-      padding: 8px 14px;
-      border: none;
-      border-radius: 6px;
-      font-size: 14px;
-      cursor: pointer;
-    }
-
-    .delete-btn:hover {
-      background-color: #b02a37;
-    }
-  </style>
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/toaster.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 </head>
 <body>
 
-  <div class="container">
-    <h2>Send Notification</h2>
+  <div class="form-container">
+    <h1>Send Notification</h1>
 
-    <form action="/admin/send-notification" method="POST">
-      <label for="title">Title</label>
-      <input type="text" id="title" name="title" placeholder="Enter notification title" required />
+    <% if (typeof error !== 'undefined' && error) { %>
+      <div class="error-msg"><%= error %></div>
+    <% } %>
+    <% if (typeof success !== 'undefined' && success) { %>
+      <div class="toast success"><%= success %></div>
+    <% } %>
 
-      <label for="message">Message</label>
-      <textarea id="message" name="message" rows="4" placeholder="Write your message here..." required></textarea>
+    <form action="/admin/send-notification" method="POST" class="form-box">
+      <input type="text" name="title" placeholder="Enter Notification Title" required />
+      <textarea 
+  name="message" 
+  rows="4" 
+  placeholder="Write your message here..." 
+  required 
+  style="width: 100%; padding: 12px; margin-bottom: 18px; border: 1px solid #ccc; border-radius: 8px; font-size: 15px; resize: vertical; font-family: 'Segoe UI', sans-serif; outline: none; box-sizing: border-box;">
+</textarea>
 
-      <label for="userEmail">Send to User Email (optional)</label>
-      <input type="text" id="userEmail" name="userEmail" placeholder="Leave empty to send to all users" />
-     
+      <input type="text" name="userEmail" placeholder="User Email (optional)" />
 
-      <button type="submit">Send Notification</button>
+      <button type="submit" class="sub-btn">Send Notification</button>
     </form>
-    <a class="back-link" href="/admin/dashboard">← Back to Dashboard</a>
+
+    <a href="/admin/dashboard" class="nav-btn" style="display: inline-block; margin-top: 20px;">← Back to Dashboard</a>
 
     <% if (notifications && notifications.length > 0) { %>
-      <div class="notification-list">
-        <h3 style="margin-top: 30px;">Sent Notifications</h3>
+      <div class="notification-list" style="margin-top: 40px;">
+        <h2 style="font-size: 20px; margin-bottom: 20px;">Sent Notifications</h2>
 
         <% notifications.forEach(n => { %>
-          <div class="notification-item">
-            <h4><%= n.title %></h4>
-            <p><%= n.message %></p>
+          <div class="notification-item" style="background-color: #f7f7f7; border-radius: 12px; padding: 18px; margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);">
+            <h3 style="color: #007bff; margin-bottom: 8px;"><%= n.title %></h3>
+            <p style="color: #333;"><%= n.message %></p>
             <% if (n.email) { %><p><strong>To:</strong> <%= n.email %></p><% } %>
-            <small><%= new Date(n.createdAt).toLocaleString() %></small>
+            <small style="color: #777;"><%= new Date(n.createdAt).toLocaleString() %></small>
 
-            <form action="/admin/notifications/<%= n._id %>/delete" method="POST">
-              <button class="delete-btn" type="submit">Delete</button>
+            <form action="/admin/notifications/<%= n._id %>/delete" method="POST" style="margin-top: 10px;">
+              <button class="sub-btn" style="background-color: #dc3545;">Delete</button>
             </form>
           </div>
         <% }); %>
       </div>
     <% } else { %>
-      <p style="margin-top: 30px; color: #555;">No notifications sent yet.</p>
+      <p class="note" style="margin-top: 30px;">No notifications sent yet.</p>
     <% } %>
-
-    
   </div>
 
 </body>
 </html>
-
-

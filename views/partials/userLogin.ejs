@@ -1,23 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta charset="UTF-8" />
   <title>User Login</title>
   <link rel="stylesheet" href="/css/style.css" />
-  <!-- Font Awesome for Eye Icon -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <link rel="stylesheet" href="/css/toaster.css" />
-
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 </head>
 <body>
   <div class="form-container">
     <h1>User Login</h1>
+
     <% if (success) { %>
       <div class="toast success"><%= success %></div>
     <% } %>
+
     <% if (typeof error !== 'undefined' && error) { %>
-      <p style="color: red;"><%= error %></p>
+      <div class="error-msg"><%= error %></div>
     <% } %>
-    
 
     <form action="/user/login" method="POST" class="form-box">
       <input type="email" name="email" placeholder="Email" required />
@@ -29,11 +29,14 @@
 
       <input type="text" name="Id" placeholder="Admin ID" required />
 
-      <button type="submit" class="btn-submit">Login</button>
+      <button type="submit" class="sub-btn">Login</button>
     </form>
-    <a href="/admin/login" class="btn-link">Back to Admin Login</a><br/>
-    <a href="/user/create" class="btn-link">Go to User Create</a><br/>
-    <a href="/user-forgot-password" class="btn-link">Forgot Password?</a>
+
+    <div class="btn-group">
+      <a href="/admin/login" class="nav-btn">Back to Admin Login</a>
+      <a href="/user/create" class="nav-btn">Go to User Create</a>
+      <a href="/user-forgot-password" class="nav-btn">Forgot Password?</a>
+    </div>
   </div>
 
   <script>
@@ -54,4 +57,3 @@
   </script>
 </body>
 </html>
-
